@@ -1,41 +1,17 @@
 import { useState } from "react";
 import Header from "../Components/Header";
 import vaultifyLogo from "../assets/Logo.svg";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = () => {
-    if (!emailError && email && password) {
-        let userList = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
-        console.log(userList, email, password);
-        if (userList.length > 0) {
-            let findIndex = userList.findIndex((item) => {
-                console.log(item.email === email , item.password === password);
-                return (item.email === email && item.password === password)
-            });
-            console.log(findIndex);
-            if (findIndex === -1) {
-                showToast("User not found!", "error");
-                return;
-            }
-            console.log(userList[findIndex]);
-            localStorage.setItem('userData', JSON.stringify(userList[findIndex]));
-            localStorage.setItem('token', '1234');
-            navigate("/home");
-        }
-        else {
-            return;
-        }
-    } else {
-        if (!password) {
-        }
-        if (!email && !emailError) {
-        }
-    }
-};
-
+  const handleLogin = () => {
+    localStorage.setItem("token", "1234"); 
+    navigate("/home"); 
+  };
   return (
     <div
       style={{
@@ -113,7 +89,7 @@ function Login() {
             gap: "10px",
           }}
         >
-          <button
+          <button onClick={handleLogin}
             style={{
               borderRadius: "3px",
               backgroundColor: "#c8417b",

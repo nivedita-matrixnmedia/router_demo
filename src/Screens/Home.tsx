@@ -56,8 +56,8 @@ function Home() {
             onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.8")}
             onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
           >
-            Go to Login
-            <img src={arrow} style={{ alignSelf: "center" }}></img>
+            Logout
+            {/* <img src={arrow} style={{ alignSelf: "center" }}></img> */}
           </button>
         </div>
       </div>
