@@ -1,68 +1,43 @@
 import Header from "../Components/Header";
-import vaultifyLogo from "../assets/Logo.svg";
-import arrow from "../assets/arrow-right-white.svg";
 import { useNavigate } from "react-router-dom";
+import home from "../assets/home.webp";
 
 function Home() {
   const navigate = useNavigate();
   return (
-    <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        height: "100vh",
-        display: "flex",
-        backgroundColor: "white",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Header title={"Welcome to Vaultify"} />
-      <div style={{ flexDirection: "column" }}>
-        <div>
-          <img
-            src={vaultifyLogo}
-            alt="logo"
-            style={{
-              width: "155px",
-              height: "auto",
-            }}
-          ></img>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "10px",
-          }}
-        >
-          <button
-            onClick={() => navigate("/login")}
-            style={{
-              borderRadius: "8px",
-              backgroundColor: "#c8417b",
-              color: "#fff",
-              border: "none",
-              cursor: "pointer",
-              fontSize: "1rem",
-              width: "100%",
-              maxWidth: "200px",
-              minWidth: "100px",
-              transition: "all 0.3s ease",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.8")}
-            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-          >
-            Logout
-            {/* <img src={arrow} style={{ alignSelf: "center" }}></img> */}
-          </button>
-        </div>
+    <div style={styles.container}>
+      <Header title="Dashboard" register home propfile/>
+      <div>
+        <h2 style={styles.textHeader}>Welcome to Vaultify</h2>
+        <h4 style={styles.textHeader}>
+          "Vaultify is your secure digital companion, designed to simplify and
+          safeguard your online experience. From managing credentials to
+          accessing personalized dashboards, we bring everything you need into
+          one streamlined platform. Seamless, secure, and built for you."
+        </h4>
       </div>
     </div>
   );
 }
+const styles = {
+  container: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100vw",
+    height: "100vh",
+    backgroundImage: `url(${home})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  textHeader: {
+    color: "white",
+  },
+};
 
 export default Home;

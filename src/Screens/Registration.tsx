@@ -5,10 +5,11 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
 import Loader from "../assets/Loader.gif";
 
-function Login() {
+function Registraion() {
   const [loader, setLoader] = useState(false);
 
   //input
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ function Login() {
   //error
   const [emailError, setEmailError] = useState("");
   const [passError, setPassError] = useState("");
+  const [userError, setuserError] = useState("");
 
   //password
   const [showIcon, setShowIcon] = useState(false);
@@ -27,12 +29,18 @@ function Login() {
 
     setEmailError("");
     setPassError("");
+    setuserError("");
 
     if (!email) {
       setEmailError("Email is required");
       isValid = false;
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       setEmailError("Please enter a valid email");
+      isValid = false;
+    }
+
+    if (!username) {
+      setuserError("Username is required");
       isValid = false;
     }
 
@@ -46,17 +54,16 @@ function Login() {
 
     try {
       const response = await axios.post(
-        "http://ec2-13-233-128-152.ap-south-1.compute.amazonaws.com:5000/api/auth/login",
+        "http://ec2-13-233-128-152.ap-south-1.compute.amazonaws.com:5000/api/auth/register",
         {
+          username,
           email,
           password,
         }
       );
       setLoader(false);
-      navigate("/profile");
-      localStorage.setItem('userId',response?.data?.user?._id);
-      localStorage.setItem('token', response?.data?.token);
-      console.log("✅ Registration Response:", response?.data);
+      navigate("/login");
+      console.log("✅ Registration Response:", response);
       alert(`Registration Successful!\n\nMessage: ${response.data.msg}`);
     } catch (error) {
       setLoader(false);
@@ -67,10 +74,23 @@ function Login() {
 
   return (
     <div style={styles.container}>
-      <Header home title="Vaultify" register/>
+      <Header login home title="Vaultify" />
       <div style={styles.formContainer}>
-        <h3 style={styles.headerText}>Login to continue</h3>
+        <h3 style={styles.headerText}>Create an Account</h3>
         <form style={styles.form}>
+          <div style={styles.inputGroup}>
+            <label htmlFor="name" style={styles.label}>
+              User name
+            </label>
+            <input
+              type="name"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              style={styles.input}
+              required
+            />
+            {userError && <span style={styles.errorText}>{userError}</span>}
+          </div>
 
           <div style={styles.inputGroup}>
             <label htmlFor="email" style={styles.label}>
@@ -220,4 +240,4 @@ const styles = {
   },
 };
 
-export default Login;
+export default Registraion;
