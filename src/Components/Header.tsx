@@ -19,7 +19,7 @@ const Header: React.FC<HeaderProps> = ({
   register,
   propfile,
 }) => {
-  const token = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
   return (
     <div style={styles.container}>
       {lefticon && (

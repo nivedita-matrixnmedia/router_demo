@@ -53,9 +53,9 @@ function Login() {
         }
       );
       setLoader(false);
-      navigate("/profile");
-      localStorage.setItem('userId',response?.data?.user?._id);
-      localStorage.setItem('token', response?.data?.token);
+      navigate("/home");
+      localStorage.setItem("userId", response?.data?.user?._id);
+      localStorage.setItem("token", response?.data?.token);
       console.log("✅ Registration Response:", response?.data);
       alert(`Registration Successful!\n\nMessage: ${response.data.msg}`);
     } catch (error) {
@@ -67,11 +67,10 @@ function Login() {
 
   return (
     <div style={styles.container}>
-      <Header home title="Vaultify" register/>
+      <Header home title="Vaultify" register />
       <div style={styles.formContainer}>
         <h3 style={styles.headerText}>Login to continue</h3>
         <form style={styles.form}>
-
           <div style={styles.inputGroup}>
             <label htmlFor="email" style={styles.label}>
               Email
@@ -123,9 +122,24 @@ function Login() {
             ) : (
               "Sumbit"
             )}
-            {/* Submit */}
           </button>
         </form>
+      </div>
+      <div style={styles.footer}>
+        <p style={styles.text}>
+          © {new Date().getFullYear()} Vaultify. All rights reserved.
+        </p>
+        <div style={{marginBottom:10}}>
+          <a href="https://admin.vaultify.club/" style={styles.link}>
+            Contact Us
+          </a>
+          <a href="https://admin.vaultify.club/" style={styles.link}>
+            Privacy and policy
+          </a>
+          <a href="https://admin.vaultify.club/" style={styles.link}>
+            About Us
+          </a>
+        </div>
       </div>
     </div>
   );
@@ -217,6 +231,24 @@ const styles = {
   errorText: {
     color: "red",
     fontSize: 11,
+  },
+  footer: {
+    position: "fixed",
+    bottom: 0,
+    width: "100%",
+    height: "60px",
+    backgroundColor: "#f1f1f1",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderTop: "1px solid #ddd",
+    flexDirection:'column'
+  },
+  link: {
+    margin: "0 10px",
+    fontSize: "13px",
+    color: "#000",
+    textDecoration: "none",
   },
 };
 
