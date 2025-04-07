@@ -5,10 +5,11 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
 import Loader from "../assets/Loader.gif";
 
-function Login() {
+function Registraion() {
   const [loader, setLoader] = useState(false);
 
   //input
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -16,23 +17,30 @@ function Login() {
   //error
   const [emailError, setEmailError] = useState("");
   const [passError, setPassError] = useState("");
+  const [userError, setuserError] = useState("");
 
   //password
   const [showIcon, setShowIcon] = useState(false);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     let isValid = true;
 
     setEmailError("");
     setPassError("");
+    setuserError("");
 
     if (!email) {
       setEmailError("Email is required");
       isValid = false;
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       setEmailError("Please enter a valid email");
+      isValid = false;
+    }
+
+    if (!username) {
+      setuserError("Username is required");
       isValid = false;
     }
 
@@ -46,17 +54,16 @@ function Login() {
 
     try {
       const response = await axios.post(
-        "http://ec2-13-233-128-152.ap-south-1.compute.amazonaws.com:5000/api/auth/login",
+        "http://ec2-13-233-128-152.ap-south-1.compute.amazonaws.com:5000/api/auth/register",
         {
+          username,
           email,
           password,
         }
       );
       setLoader(false);
-      navigate("/home");
-      localStorage.setItem("userId", response?.data?.user?._id);
-      localStorage.setItem("token", response?.data?.token);
-      console.log("✅ Registration Response:", response?.data);
+      navigate("/login");
+      console.log("✅ Registration Response:", response);
       alert(`Registration Successful!\n\nMessage: ${response.data.msg}`);
     } catch (error) {
       setLoader(false);
@@ -67,10 +74,24 @@ function Login() {
 
   return (
     <div style={styles.container}>
-      <Header home title="Vaultify" register />
+      <Header login home title="Vaultify" />
       <div style={styles.formContainer}>
-        <h3 style={styles.headerText}>Login to continue</h3>
+        <h3 style={styles.headerText}>Create an Account</h3>
         <form style={styles.form}>
+          <div style={styles.inputGroup}>
+            <label htmlFor="name" style={styles.label}>
+              User name
+            </label>
+            <input
+              type="name"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              style={styles.input}
+              required
+            />
+            {userError && <span style={styles.errorText}>{userError}</span>}
+          </div>
+
           <div style={styles.inputGroup}>
             <label htmlFor="email" style={styles.label}>
               Email
@@ -122,24 +143,9 @@ function Login() {
             ) : (
               "Sumbit"
             )}
+            {/* Submit */}
           </button>
         </form>
-      </div>
-      <div style={styles.footer}>
-        <p style={styles.text}>
-          © {new Date().getFullYear()} Vaultify. All rights reserved.
-        </p>
-        <div style={{marginBottom:10}}>
-          <a href="https://admin.vaultify.club/" style={styles.link}>
-            Contact Us
-          </a>
-          <a href="https://admin.vaultify.club/" style={styles.link}>
-            Privacy and policy
-          </a>
-          <a href="https://admin.vaultify.club/" style={styles.link}>
-            About Us
-          </a>
-        </div>
       </div>
     </div>
   );
@@ -232,24 +238,6 @@ const styles = {
     color: "red",
     fontSize: 11,
   },
-  footer: {
-    position: "fixed",
-    bottom: 0,
-    width: "100%",
-    height: "60px",
-    backgroundColor: "#f1f1f1",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    borderTop: "1px solid #ddd",
-    flexDirection:'column'
-  },
-  link: {
-    margin: "0 10px",
-    fontSize: "13px",
-    color: "#000",
-    textDecoration: "none",
-  },
 };
 
-export default Login;
+export default Registraion;

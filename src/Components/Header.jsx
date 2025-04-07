@@ -2,16 +2,7 @@ import React from "react";
 import vaultifyLogo from "../assets/Logo.svg";
 import { Link } from "react-router-dom";
 
-interface HeaderProps {
-  title?: string;
-  lefticon?: React.ReactNode;
-  login?: boolean;
-  home?: boolean;
-  register?: boolean;
-  propfile?: boolean;
-}
-
-const Header: React.FC<HeaderProps> = ({
+const Header = ({
   title,
   lefticon,
   login,
